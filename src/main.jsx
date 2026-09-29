@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "@fontsource/dm-sans/latin-400.css";
 import "@fontsource/dm-sans/latin-500.css";
 import "@fontsource/dm-sans/latin-600.css";
@@ -16,9 +16,11 @@ import {
   Routes,
   useNavigate,
   useParams,
+  useLocation,
 } from "react-router-dom";
 import { brand, copy, eventTypes, genres } from "./config";
 import "./style.css";
+import "./theme.css";
 
 async function api(url, options = {}) {
   const res = await fetch("/api" + url, {
@@ -163,7 +165,7 @@ function Header() {
           <span>{brand.name}</span>
         </Link>
         <nav aria-label="Hauptnavigation">
-          <NavLink to="/#ablauf">So funktioniert's</NavLink>
+          <a href="/#ablauf">So funktioniert's</a>
           <NavLink to="/dj">Für DJs</NavLink>
           <Link
             className="nav-login"
@@ -217,10 +219,45 @@ function Footer() {
   );
 }
 function Layout({ children }) {
+  const mainRef = useRef(null);
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (media.matches || !("IntersectionObserver" in window)) return;
+    const elements = mainRef.current.querySelectorAll(
+      ".section-top, .step, .benefit-grid, .banner-inner, .faq-grid",
+    );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08 },
+    );
+    elements.forEach((element) => {
+      if (element.getBoundingClientRect().top > window.innerHeight) {
+        element.classList.add("reveal");
+        observer.observe(element);
+      }
+    });
+    const showAll = () => {
+      if (media.matches)
+        elements.forEach((element) => element.classList.add("is-visible"));
+    };
+    media.addEventListener("change", showAll);
+    return () => {
+      observer.disconnect();
+      media.removeEventListener("change", showAll);
+    };
+  }, [pathname]);
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main ref={mainRef}>{children}</main>
       <Footer />
     </>
   );
@@ -239,6 +276,9 @@ function Home() {
     <Layout>
       <section className="hero">
         <div className="hero-glow" />
+        <div className="hero-vinyl" aria-hidden="true">
+          <span />
+        </div>
         <div className="container hero-grid">
           <div className="hero-copy">
             <div className="eyebrow">
@@ -249,10 +289,10 @@ function Home() {
             </h1>
             <p className="hero-sub">{copy.home.subtitle}</p>
             <div className="hero-proof">
-              <div className="proof-avatars">
-                <span>M</span>
-                <span>N</span>
-                <span>L</span>
+              <div className="sound-bars" aria-hidden="true">
+                {Array.from({ length: 9 }, (_, i) => (
+                  <i key={i} style={{ "--bar": i }} />
+                ))}
               </div>
               <span>Persönlich. Passend. Unvergesslich.</span>
             </div>
@@ -1771,10 +1811,10 @@ function App() {
   );
 }
 
-document.documentElement.style.setProperty("--brand-navy", brand.colors.navy);
+document.documentElement.style.setProperty("--brand-ink", brand.colors.ink);
 document.documentElement.style.setProperty(
-  "--brand-violet",
-  brand.colors.violet,
+  "--brand-accent",
+  brand.colors.champagne,
 );
-document.documentElement.style.setProperty("--brand-coral", brand.colors.coral);
+document.documentElement.style.setProperty("--brand-sage", brand.colors.sage);
 createRoot(document.getElementById("root")).render(<App />);

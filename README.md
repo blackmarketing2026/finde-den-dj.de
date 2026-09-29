@@ -27,7 +27,9 @@ Startseite, mehrstufige Anfrage, privater Anfragestatus mit passenden DJs und An
 
 ## Konfiguration und Grenzen
 
-Markenname und wichtige UI-Texte/Farben liegen in `src/config.js`; die Designfarben zusätzlich in `src/style.css`. Die Schallplatte mit Kompassnadel unter `public/logos/vinyl-compass.svg` ist als Logo und Favicon aktiv. Frühere Entwürfe bleiben unter `public/logos/` erhalten.
+Markenname und wichtige UI-Texte/Farben liegen in `src/config.js`. Das Design in Waldgrün, Elfenbein und Champagnergold wird über `src/theme.css` gestaltet; `src/style.css` enthält die Grundlayouts. Die Schallplatte mit Kompassnadel unter `public/logos/vinyl-compass.svg` ist als Logo und Favicon aktiv. Frühere Entwürfe bleiben unter `public/logos/` erhalten.
+
+Animationen umfassen dezente Schallplattenrotation, bewegte Klangbalken, Einblendungen beim Scrollen und Hover-Effekte. Die Systemeinstellung `prefers-reduced-motion` schaltet diese Bewegungen ab. Schriften werden lokal mitgeliefert.
 
 SMTP ist optional. Ohne `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` werden Ereignisse lokal in der Datenbank und im Server-Terminal dokumentiert. Mit diesen Variablen wird E-Mail-Versand aktiviert. Zahlungsabwicklung und Gebühren sind nicht aktiv.
 

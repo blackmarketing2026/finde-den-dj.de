@@ -1,6 +1,6 @@
 export const brand = {
   name: "DJKompass",
-  colors: { navy: "#101426", violet: "#8B6CFF", coral: "#FF896D" },
+  colors: { ink: "#102822", champagne: "#D9BC83", sage: "#9BB5A3" },
   tagline: "Der richtige Sound. Für deinen Moment.",
 };
 export const copy = {
