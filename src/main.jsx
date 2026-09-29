@@ -159,7 +159,7 @@ function Header() {
     <header className="site-header">
       <div className="container nav">
         <Link className="logo" to="/">
-          <img src="/logos/compass-play.svg" alt="" />
+          <img src="/logos/djkompass-mark.svg" alt="" />
           <span>{brand.name}</span>
         </Link>
         <nav aria-label="Hauptnavigation">
@@ -191,7 +191,7 @@ function Footer() {
       <div className="container footer-grid">
         <div>
           <Link className="logo" to="/">
-            <img src="/logos/compass-play.svg" alt="" />
+            <img src="/logos/djkompass-mark.svg" alt="" />
             {brand.name}
           </Link>
           <p>{brand.tagline}</p>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">DJKompass</title>
+  <rect width="64" height="64" rx="17" fill="#171C32"/>
+  <path d="M17 16h14.5C42.4 16 50 22.5 50 32S42.4 48 31.5 48H17V16Zm8 8v16h6.2C37.7 40 42 36.9 42 32s-4.3-8-10.8-8H25Z" fill="#A58CFF" fill-rule="evenodd"/>
+  <path d="m29 38 3.2-10.2L43 24l-3.8 10.8L29 38Z" fill="#FF896D"/>
+  <path d="m32.2 27.8 7 7" stroke="#171C32" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
