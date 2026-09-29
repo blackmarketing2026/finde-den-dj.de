@@ -27,7 +27,7 @@ Startseite, mehrstufige Anfrage, privater Anfragestatus mit passenden DJs und An
 
 ## Konfiguration und Grenzen
 
-Markenname und wichtige UI-Texte/Farben liegen in `src/config.js`; die Designfarben zusätzlich in `src/style.css`. Das neue D-Kompass-Zeichen unter `public/logos/djkompass-mark.svg` ist als Logo und Favicon aktiv. Die drei ursprünglichen Entwürfe bleiben unter `public/logos/` erhalten.
+Markenname und wichtige UI-Texte/Farben liegen in `src/config.js`; die Designfarben zusätzlich in `src/style.css`. Die Schallplatte mit Kompassnadel unter `public/logos/vinyl-compass.svg` ist als Logo und Favicon aktiv. Frühere Entwürfe bleiben unter `public/logos/` erhalten.
 
 SMTP ist optional. Ohne `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` werden Ereignisse lokal in der Datenbank und im Server-Terminal dokumentiert. Mit diesen Variablen wird E-Mail-Versand aktiviert. Zahlungsabwicklung und Gebühren sind nicht aktiv.
 
