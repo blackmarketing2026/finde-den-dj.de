@@ -24,8 +24,8 @@ const inquiry = await call("/inquiries", "POST", {
   genres: ["House", "Disco"],
   city: "Berlin",
   event_date: "2027-07-17",
-  guests: 80,
-  budget: 1200,
+  guests: "",
+  budget: "",
   wishes: "Tanzbare Musik",
   consent: true,
   website: "",
@@ -35,6 +35,16 @@ const token = inquiry.data.token;
 const before = await call("/inquiries/" + token);
 assert.equal(before.status, 200);
 assert.equal(before.data.offers.length, 0);
+assert.equal(
+  before.data.inquiry.guests,
+  null,
+  "Leere optionale Gästezahl darf die Anfrage nicht blockieren",
+);
+assert.equal(
+  before.data.inquiry.budget,
+  null,
+  "Leeres Budget wird als nicht angegeben gespeichert",
+);
 assert.ok(before.data.matches.some((x) => x.stage_name === "Maya Sol"));
 const login = await call("/auth/login", "POST", {
   email: "maya@djkompass.local",

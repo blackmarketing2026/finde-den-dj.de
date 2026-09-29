@@ -67,11 +67,9 @@ function requireRole(role) {
   };
 }
 const fail = (res, e) =>
-  res
-    .status(400)
-    .json({
-      error: e.issues?.[0]?.message || e.message || "Ungültige Eingabe.",
-    });
+  res.status(400).json({
+    error: e.issues?.[0]?.message || e.message || "Ungültige Eingabe.",
+  });
 const email = z.email("Bitte eine gültige E-Mail-Adresse eingeben.");
 const txt = (min, max, label) =>
   z
@@ -103,10 +101,16 @@ const inquirySchema = z.object({
   genres: list,
   city: txt(2, 100, "Ort"),
   event_date: z.iso.date(),
-  guests: z.coerce.number().int().min(1).max(100000).optional(),
+  guests: z.preprocess(
+    (value) => (value === "" || value === null ? undefined : value),
+    z.coerce.number().int().min(1).max(100000).optional(),
+  ),
   start_time: z.string().max(5).optional(),
   end_time: z.string().max(5).optional(),
-  budget: z.coerce.number().int().min(0).max(1000000).optional(),
+  budget: z.preprocess(
+    (value) => (value === "" || value === null ? undefined : value),
+    z.coerce.number().int().min(0).max(1000000).optional(),
+  ),
   wishes: z.string().max(2000).default(""),
   consent: z.literal(true),
   website: z.string().max(0).default(""),
@@ -281,12 +285,10 @@ app.post("/api/inquiries", inquiryLimit, (req, res) => {
       )
       .get(d.email.toLowerCase(), d.event_date, d.event_type);
     if (recent)
-      return res
-        .status(429)
-        .json({
-          error:
-            "Diese Anfrage wurde bereits gesendet. Bitte prüfe deine E-Mail oder warte kurz.",
-        });
+      return res.status(429).json({
+        error:
+          "Diese Anfrage wurde bereits gesendet. Bitte prüfe deine E-Mail oder warte kurz.",
+      });
     const token = crypto.randomBytes(24).toString("base64url");
     const result = db
       .prepare(

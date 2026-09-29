@@ -21,6 +21,10 @@ import {
 import { brand, copy, eventTypes, genres } from "./config";
 import "./style.css";
 import "./theme.css";
+import LandingPage from "./LandingPage";
+import "@fontsource/barlow-condensed/latin-500.css";
+import "@fontsource/barlow-condensed/latin-600.css";
+import "@fontsource/barlow-condensed/latin-700.css";
 
 async function api(url, options = {}) {
   const res = await fetch("/api" + url, {
@@ -180,7 +184,7 @@ function Header() {
             {user ? "Dashboard" : "Anmelden"}
           </Link>
           <Link className="button button-small" to="/anfrage">
-            DJ finden <Icon name="arrow" size={16} />
+            DJs anfragen <Icon name="arrow" size={16} />
           </Link>
         </nav>
       </div>
@@ -225,7 +229,7 @@ function Layout({ children }) {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (media.matches || !("IntersectionObserver" in window)) return;
     const elements = mainRef.current.querySelectorAll(
-      ".section-top, .step, .benefit-grid, .banner-inner, .faq-grid",
+      "[data-reveal], .section-top, .step, .benefit-grid, .banner-inner, .faq-grid",
     );
     const observer = new IntersectionObserver(
       (entries) => {
@@ -263,270 +267,10 @@ function Layout({ children }) {
   );
 }
 function Home() {
-  const navigate = useNavigate();
   const [draft, setDraft] = useDraft();
-  const [profiles, setProfiles] = useState([]);
-  useEffect(() => {
-    api("/profiles")
-      .then(setProfiles)
-      .catch(() => {});
-  }, []);
-  const update = (key, val) => setDraft((d) => ({ ...d, [key]: val }));
   return (
     <Layout>
-      <section className="hero">
-        <div className="hero-glow" />
-        <div className="hero-vinyl" aria-hidden="true">
-          <span />
-        </div>
-        <div className="container hero-grid">
-          <div className="hero-copy">
-            <div className="eyebrow">
-              <span className="eyebrow-dot" /> {copy.home.eyebrow}
-            </div>
-            <h1>
-              {copy.home.headlineStart} <em>{copy.home.headlineAccent}</em>
-            </h1>
-            <p className="hero-sub">{copy.home.subtitle}</p>
-            <div className="hero-proof">
-              <div className="sound-bars" aria-hidden="true">
-                {Array.from({ length: 9 }, (_, i) => (
-                  <i key={i} style={{ "--bar": i }} />
-                ))}
-              </div>
-              <span>Persönlich. Passend. Unvergesslich.</span>
-            </div>
-          </div>
-          <form
-            className="hero-form card"
-            onSubmit={(e) => {
-              e.preventDefault();
-              navigate("/anfrage");
-            }}
-          >
-            <div className="form-header">
-              <span className="badge">IN 2 MINUTEN STARTEN</span>
-              <h2>{copy.home.formTitle}</h2>
-              <p>{copy.home.formIntro}</p>
-            </div>
-            <Field label="Was feierst du?">
-              <select
-                required
-                value={draft.event_type}
-                onChange={(e) => update("event_type", e.target.value)}
-              >
-                <option value="">Event auswählen</option>
-                {eventTypes.map((x) => (
-                  <option key={x}>{x}</option>
-                ))}
-              </select>
-            </Field>
-            <Field label="Welche Musik soll laufen?">
-              <GenrePicker
-                value={draft.genres}
-                onChange={(x) => update("genres", x)}
-              />
-            </Field>
-            <div className="form-row">
-              <Field label="Wo findet das Event statt?">
-                <input
-                  required
-                  placeholder="Ort oder PLZ"
-                  value={draft.city}
-                  onChange={(e) => update("city", e.target.value)}
-                />
-              </Field>
-              <Field label="Wann findet es statt?">
-                <input
-                  required
-                  type="date"
-                  min={new Date().toISOString().slice(0, 10)}
-                  value={draft.event_date}
-                  onChange={(e) => update("event_date", e.target.value)}
-                />
-              </Field>
-            </div>
-            <button
-              className="button button-full"
-              disabled={!draft.genres.length}
-            >
-              {copy.home.findButton} <Icon name="arrow" />
-            </button>
-            <p className="form-foot">
-              <Icon name="shield" size={15} /> Kostenlos & unverbindlich
-              anfragen
-            </p>
-          </form>
-        </div>
-        <div className="container stat-line">
-          <span>Für Momente, die bleiben.</span>
-          <div>
-            <strong>01</strong> Wunschmusik angeben
-          </div>
-          <div>
-            <strong>02</strong> DJs entdecken
-          </div>
-          <div>
-            <strong>03</strong> Angebote vergleichen
-          </div>
-        </div>
-      </section>
-      <section className="section light" id="ablauf">
-        <div className="container">
-          <div className="section-top">
-            <div>
-              <div className="kicker">SO EINFACH GEHT'S</div>
-              <h2>
-                {copy.home.stepsTitle} <span>{copy.home.stepsAccent}</span>
-              </h2>
-            </div>
-            <p>
-              Weniger Suchen. Mehr Vorfreude. Wir bringen deine Vorstellungen
-              mit den richtigen Menschen zusammen.
-            </p>
-          </div>
-          <div className="steps">
-            <div className="step">
-              <span className="step-number">01</span>
-              <div className="step-icon">
-                <Icon name="music" size={29} />
-              </div>
-              <h3>Erzähl uns von deinem Event</h3>
-              <p>
-                Was du feierst, welche Musik du liebst und wo die Party steigt.
-              </p>
-            </div>
-            <div className="step">
-              <span className="step-number">02</span>
-              <div className="step-icon">
-                <Icon name="spark" size={29} />
-              </div>
-              <h3>Entdecke passende DJs</h3>
-              <p>
-                Sieh auf einen Blick, welche DJs zu deinem Event passen – und
-                warum.
-              </p>
-            </div>
-            <div className="step">
-              <span className="step-number">03</span>
-              <div className="step-icon">
-                <Icon name="heart" size={29} />
-              </div>
-              <h3>Vergleiche echte Angebote</h3>
-              <p>
-                Erhalte individuelle Antworten und entscheide in deinem Tempo.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="section dark-section">
-        <div className="container benefit-grid">
-          <div>
-            <div className="kicker">DEIN EVENT. DEINE ENTSCHEIDUNG.</div>
-            <h2>
-              {copy.home.benefitsTitle} <span>{copy.home.benefitsAccent}</span>
-            </h2>
-            <p>
-              Ein guter DJ spielt nicht einfach Songs. Er versteht den Anlass,
-              liest die Stimmung und macht aus einem Abend eine Erinnerung.
-            </p>
-            <Link className="button" to="/anfrage">
-              Jetzt DJ finden <Icon name="arrow" />
-            </Link>
-          </div>
-          <div className="benefit-list">
-            <div>
-              <Icon name="check" />
-              <span>
-                <strong>Passende Vorschläge</strong> nach Stil, Event und
-                Einsatzgebiet
-              </span>
-            </div>
-            <div>
-              <Icon name="check" />
-              <span>
-                <strong>Klare Gründe</strong> für jeden Vorschlag
-              </span>
-            </div>
-            <div>
-              <Icon name="check" />
-              <span>
-                <strong>Individuelle Angebote</strong> direkt von DJs
-              </span>
-            </div>
-            <div>
-              <Icon name="check" />
-              <span>
-                <strong>Ohne Buchungsdruck</strong> und derzeit ohne Gebühren
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="section light" id="djs">
-        <div className="container">
-          <div className="section-top">
-            <div>
-              <div className="kicker">MENSCHEN HINTER DEM PULT</div>
-              <h2>
-                {copy.home.profilesTitle}{" "}
-                <span>{copy.home.profilesAccent}</span>
-              </h2>
-            </div>
-            <p>
-              Ein erster Blick auf Künstlerinnen und Künstler aus unserer
-              Community.
-            </p>
-          </div>
-          <div className="profile-grid">
-            {profiles.slice(0, 3).map((p, i) => (
-              <ProfileCard key={p.id} p={p} index={i} />
-            ))}
-            {!profiles.length && (
-              <p>Noch keine freigegebenen Profile vorhanden.</p>
-            )}
-          </div>
-        </div>
-      </section>
-      <section className="section dj-banner">
-        <div className="container banner-inner">
-          <div>
-            <div className="kicker">DU STEHST HINTER DEN DECKS?</div>
-            <h2>
-              Die richtigen Anfragen.
-              <br />
-              <em>Dein nächster Gig.</em>
-            </h2>
-            <p>
-              Zeig, was dich ausmacht, und antworte auf Events, die zu dir
-              passen.
-            </p>
-          </div>
-          <Link className="button button-coral" to="/dj">
-            {copy.home.djButton} <Icon name="arrow" />
-          </Link>
-        </div>
-      </section>
-      <section className="section light faq">
-        <div className="container faq-grid">
-          <div>
-            <div className="kicker">GUT ZU WISSEN</div>
-            <h2>
-              Häufige <span>Fragen.</span>
-            </h2>
-            <p>Alles Wichtige für deinen Start.</p>
-          </div>
-          <div>
-            {copy.home.faq.map(([q, a]) => (
-              <details key={q}>
-                <summary>{q}</summary>
-                <p>{a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <LandingPage draft={draft} setDraft={setDraft} />
     </Layout>
   );
 }
@@ -616,11 +360,11 @@ function Request() {
           <div className="page-heading">
             <div className="kicker">DEINE ANFRAGE</div>
             <h1>
-              Ein paar Details. <span>Viele Möglichkeiten.</span>
+              Ein Briefing. <span>Mehrere DJs anfragen.</span>
             </h1>
             <p>
-              Je genauer deine Angaben, desto besser können DJs auf dein Event
-              eingehen.
+              Erzähle uns von deinem Event. Passende DJs erhalten deine Anfrage
+              und können dir individuelle Angebote schicken.
             </p>
           </div>
           <div className="progress">
@@ -628,7 +372,7 @@ function Request() {
               1 <span>Event</span>
             </div>
             <div className={step >= 2 ? "active" : ""}>
-              2 <span>Details</span>
+              2 <span>Kontakt</span>
             </div>
             <div className={step >= 3 ? "active" : ""}>
               3 <span>Prüfen</span>
@@ -681,51 +425,11 @@ function Request() {
               </>
             ) : step === 2 ? (
               <>
-                <h2>Mach dein Event greifbar.</h2>
-                <div className="form-row">
-                  <Field label="Gästezahl">
-                    <input
-                      type="number"
-                      min="1"
-                      value={d.guests}
-                      onChange={(e) => set("guests", e.target.value)}
-                      placeholder="z. B. 80"
-                    />
-                  </Field>
-                  <Field label="Budget ungefähr (€)">
-                    <input
-                      type="number"
-                      min="0"
-                      value={d.budget}
-                      onChange={(e) => set("budget", e.target.value)}
-                      placeholder="Optional"
-                    />
-                  </Field>
-                </div>
-                <div className="form-row">
-                  <Field label="Beginn">
-                    <input
-                      type="time"
-                      value={d.start_time}
-                      onChange={(e) => set("start_time", e.target.value)}
-                    />
-                  </Field>
-                  <Field label="Ende">
-                    <input
-                      type="time"
-                      value={d.end_time}
-                      onChange={(e) => set("end_time", e.target.value)}
-                    />
-                  </Field>
-                </div>
-                <Field label="Besondere Wünsche">
-                  <textarea
-                    rows="4"
-                    value={d.wishes}
-                    onChange={(e) => set("wishes", e.target.value)}
-                    placeholder="Musik, Technik, Ablauf oder alles, was dir wichtig ist"
-                  />
-                </Field>
+                <h2>Wohin sollen deine Angebote?</h2>
+                <p className="request-contact-note">
+                  Du bekommst einen privaten Link zu deiner Anfrage und den
+                  eingehenden Angeboten.
+                </p>
                 <div className="form-row">
                   <Field label="Dein Name *">
                     <input
@@ -743,6 +447,54 @@ function Request() {
                     />
                   </Field>
                 </div>
+                <details className="optional-details">
+                  <summary>Weitere Eventdetails (optional)</summary>
+
+                  <div className="form-row">
+                    <Field label="Gästezahl">
+                      <input
+                        type="number"
+                        min="1"
+                        value={d.guests}
+                        onChange={(e) => set("guests", e.target.value)}
+                        placeholder="z. B. 80"
+                      />
+                    </Field>
+                    <Field label="Budget ungefähr (€)">
+                      <input
+                        type="number"
+                        min="0"
+                        value={d.budget}
+                        onChange={(e) => set("budget", e.target.value)}
+                        placeholder="Optional"
+                      />
+                    </Field>
+                  </div>
+                  <div className="form-row">
+                    <Field label="Beginn">
+                      <input
+                        type="time"
+                        value={d.start_time}
+                        onChange={(e) => set("start_time", e.target.value)}
+                      />
+                    </Field>
+                    <Field label="Ende">
+                      <input
+                        type="time"
+                        value={d.end_time}
+                        onChange={(e) => set("end_time", e.target.value)}
+                      />
+                    </Field>
+                  </div>
+                  <Field label="Besondere Wünsche">
+                    <textarea
+                      rows="4"
+                      value={d.wishes}
+                      onChange={(e) => set("wishes", e.target.value)}
+                      placeholder="Musik, Technik, Ablauf oder alles, was dir wichtig ist"
+                    />
+                  </Field>
+                </details>
               </>
             ) : (
               <>
@@ -1814,7 +1566,7 @@ function App() {
 document.documentElement.style.setProperty("--brand-ink", brand.colors.ink);
 document.documentElement.style.setProperty(
   "--brand-accent",
-  brand.colors.champagne,
+  brand.colors.accent,
 );
-document.documentElement.style.setProperty("--brand-sage", brand.colors.sage);
+document.documentElement.style.setProperty("--brand-muted", brand.colors.muted);
 createRoot(document.getElementById("root")).render(<App />);

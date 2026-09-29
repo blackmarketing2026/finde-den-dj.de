@@ -27,9 +27,11 @@ Startseite, mehrstufige Anfrage, privater Anfragestatus mit passenden DJs und An
 
 ## Konfiguration und Grenzen
 
-Markenname und wichtige UI-Texte/Farben liegen in `src/config.js`. Das Design in Waldgrün, Elfenbein und Champagnergold wird über `src/theme.css` gestaltet; `src/style.css` enthält die Grundlayouts. Die Schallplatte mit Kompassnadel unter `public/logos/vinyl-compass.svg` ist als Logo und Favicon aktiv. Frühere Entwürfe bleiben unter `public/logos/` erhalten.
+Markenname und wichtige UI-Texte/Farben liegen in `src/config.js`. Die neue Startseite in Anthrazit, gebrochenem Weiß und elektrischem Limettengelb liegt in `src/LandingPage.jsx` und `src/landing.css`. `src/theme.css` gestaltet Formulare, Dashboards und gemeinsame Elemente; `src/style.css` enthält die Grundlayouts. Die Schallplatte mit Kompassnadel unter `public/logos/vinyl-compass.svg` ist als Logo und Favicon aktiv. Frühere Entwürfe bleiben unter `public/logos/` erhalten.
 
-Animationen umfassen dezente Schallplattenrotation, bewegte Klangbalken, Einblendungen beim Scrollen und Hover-Effekte. Die Systemeinstellung `prefers-reduced-motion` schaltet diese Bewegungen ab. Schriften werden lokal mitgeliefert.
+Animationen umfassen einen Foto-Parallaxeffekt, einen laufenden Eventstreifen, eine animierte Anfrageverteilung, interaktive Klangbalken, Einblendungen beim Scrollen und Hover-Effekte. Die Startseite bietet einen Pausenschalter; die Systemeinstellung `prefers-reduced-motion` wird ebenfalls berücksichtigt. Schriften werden lokal mitgeliefert. Das generierte Titelbild und dessen Entstehung sind in [docs/design-assets.md](docs/design-assets.md) dokumentiert.
+
+Der Einstieg fragt Event, Ort und Datum ab. Musikrichtungen können im interaktiven Musikbereich oder im Anfrageformular gewählt werden. Im Kontakt-Schritt stehen Name und E-Mail vorne; zusätzliche Eventdetails sind optional aufklappbar. Eine Anfrage erreicht mehrere freigegebene DJs, sofern diese die Matching-Kriterien erfüllen. Die Anzahl tatsächlicher Angebote hängt von deren Antworten ab.
 
 SMTP ist optional. Ohne `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` werden Ereignisse lokal in der Datenbank und im Server-Terminal dokumentiert. Mit diesen Variablen wird E-Mail-Versand aktiviert. Zahlungsabwicklung und Gebühren sind nicht aktiv.
 

@@ -1,18 +1,18 @@
 export const brand = {
   name: "DJKompass",
-  colors: { ink: "#102822", champagne: "#D9BC83", sage: "#9BB5A3" },
+  colors: { ink: "#191D18", accent: "#E4FF5E", muted: "#A6B58F" },
   tagline: "Der richtige Sound. Für deinen Moment.",
 };
 export const copy = {
   home: {
-    eyebrow: "DER RICHTIGE SOUND FÜR DEINEN MOMENT",
+    eyebrow: "EINE ANFRAGE. MEHRERE PASSENDE DJS.",
     headlineStart: "Finde den DJ, der zu deinem",
     headlineAccent: "Event passt.",
     subtitle:
-      "Musikstil und Event angeben, passende DJs entdecken und Angebote vergleichen.",
+      "Erzähl uns von deinem Event. Wir fragen passende DJs für dich an. Du vergleichst ihre Angebote und entscheidest, wer auflegt.",
     formTitle: "Dein Event. Dein Sound.",
     formIntro: "Erzähl uns, was du planst.",
-    findButton: "Passende DJs finden",
+    findButton: "DJs anfragen",
     stepsTitle: "Drei Schritte zu deinem",
     stepsAccent: "perfekten Sound.",
     benefitsTitle: "Musik, die sich",
@@ -26,12 +26,12 @@ export const copy = {
         "Nein. Anfragen und das Vergleichen von Angeboten sind derzeit kostenlos und unverbindlich.",
       ],
       [
-        "Wie werden DJs vorgeschlagen?",
-        "Wir gleichen Musikrichtungen, Eventart, Einsatzgebiet und als belegt markierte Termine ab. Der lokale Standortabgleich deckt einige große Städte und PLZ-Bereiche ab.",
+        "Erreicht meine Anfrage mehrere DJs?",
+        "Ja, deine Anfrage wird allen freigegebenen DJs zugeordnet, deren Angaben zu deinem Event passen. Wir gleichen Musik, Eventart, Einsatzgebiet und belegte Termine ab. Wie viele DJs infrage kommen, hängt von deinen Angaben und den verfügbaren Profilen ab.",
       ],
       [
-        "Wann bekomme ich Angebote?",
-        "DJs entscheiden selbst, ob und wann sie antworten. Solange keine Antwort vorliegt, zeigen wir keine Angebote an.",
+        "Wie viele Angebote bekomme ich?",
+        "Jeder passende DJ kann dir ein eigenes Angebot senden. Anzahl und Zeitpunkt hängen von den Rückmeldungen ab. Über deinen privaten Link siehst du alle eingegangenen Angebote — solange noch niemand geantwortet hat, ist das klar gekennzeichnet.",
       ],
       [
         "Sind alle DJs geprüft?",
