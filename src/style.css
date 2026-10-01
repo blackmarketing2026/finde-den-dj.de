@@ -1127,6 +1127,16 @@ p {
 .legal p {
   color: #5f687b;
 }
+.legal address {
+  font-style: normal;
+  margin: 0 0 12px;
+}
+.legal ul {
+  padding-left: 20px;
+}
+.legal li {
+  margin-bottom: 6px;
+}
 .legal .alert {
   margin-bottom: 40px;
 }

@@ -212,7 +212,9 @@ html {
 .dashboard-head p,
 .section-heading p,
 .lead,
-.legal p {
+.legal p,
+.legal address,
+.legal li {
   color: #6b7c59;
 }
 .back-link {

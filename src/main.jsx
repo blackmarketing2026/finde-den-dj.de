@@ -1517,55 +1517,331 @@ function Admin() {
 }
 function Legal({ type }) {
   const imprint = type === "impressum";
+  const mail = (
+    <a href="mailto:info@electroart-events.de">info@electroart-events.de</a>
+  );
   return (
     <Layout>
       <section className="page-section">
         <div className="container narrow legal">
-          <div className="kicker">RECHTLICHES · PLATZHALTER</div>
+          <div className="kicker">RECHTLICHES</div>
           <h1>{imprint ? "Impressum" : "Datenschutzerklärung"}</h1>
-          <div className="alert">
-            Diese Seite ist ein Platzhalter. Vor einem öffentlichen Start müssen
-            echte Betreiberangaben und rechtlich geprüfte Texte eingesetzt
-            werden.
-          </div>
           {imprint ? (
             <>
-              <h2>Angaben zum Betreiber</h2>
-              <p>
-                [Name/Firma, Rechtsform, ladungsfähige Anschrift,
-                vertretungsberechtigte Person]
-              </p>
+              <h2>Angaben gemäß § 5 DDG</h2>
+              <address>
+                Jens Naumann
+                <br />
+                ElectroArt – DJ &amp; Event-Service
+                <br />
+                Heldmanstr. 35
+                <br />
+                32756 Detmold
+              </address>
               <h2>Kontakt</h2>
-              <p>[E-Mail-Adresse, Telefonnummer]</p>
-              <h2>Weitere Angaben</h2>
               <p>
-                [Register, Umsatzsteuer-ID, verantwortliche Person, soweit
-                einschlägig]
+                Telefon: 015158778666
+                <br />
+                Telefax: 052314524984
+                <br />
+                E-Mail: {mail}
               </p>
+              <h2>Umsatzsteuer-Identifikationsnummer</h2>
+              <p>[PLATZHALTER – USt-IdNr. einfügen, falls vorhanden]</p>
             </>
           ) : (
             <>
-              <h2>Verantwortliche Stelle</h2>
-              <p>[Name und Kontaktdaten des Betreibers]</p>
-              <h2>Verarbeitete Daten</h2>
+              <h2>1. Verantwortlicher</h2>
               <p>
-                Für DJ-Konten und Anfragen werden Kontaktangaben, Eventdaten,
-                Profile und Angebote gespeichert. Passende DJs erhalten die für
-                ein Angebot erforderlichen Angaben. Der private Zugangslink
-                ermöglicht Veranstaltern den Abruf ihrer Anfrage und Angebote.
+                Verantwortlich für die Datenverarbeitung auf dieser Website ist:
               </p>
-              <h2>Technische Speicherung</h2>
+              <address>
+                Jens Naumann
+                <br />
+                ElectroArt – DJ &amp; Event-Service
+                <br />
+                Heldmanstr. 35
+                <br />
+                32756 Detmold
+                <br />
+                Telefon: 015158778666
+                <br />
+                E-Mail: {mail}
+              </address>
+              <h2>2. Allgemeine Hinweise zur Datenverarbeitung</h2>
               <p>
-                Eine technisch erforderliche Sitzung wird für angemeldete DJs
-                und Administratoren als HTTP-only-Cookie gespeichert.
-                Bilddateien und Benachrichtigungsereignisse werden auf dem
-                Server gespeichert.
+                Wir verarbeiten personenbezogene Daten unserer Nutzer
+                grundsätzlich nur, soweit dies zur Bereitstellung einer
+                funktionsfähigen Website sowie unserer Inhalte und Leistungen
+                erforderlich ist oder eine Einwilligung der Nutzer vorliegt.
+                Rechtsgrundlage ist jeweils Art. 6 Abs. 1 DSGVO.
               </p>
-              <h2>Rechte und Aufbewahrung</h2>
+              <h2>3. Hosting</h2>
               <p>
-                [Rechtsgrundlagen, Speicherdauer, Betroffenenrechte, Kontakt für
-                Auskunft/Löschung sowie externe Dienstleister ergänzen und
-                rechtlich prüfen.]
+                Diese Website wird bei einem externen Dienstleister gehostet:
+              </p>
+              <address>
+                ALL-INKL.COM – Neue Medien Münnich, Inh. René Münnich
+                <br />
+                Hauptstraße 68
+                <br />
+                02742 Friedersdorf
+              </address>
+              <p>
+                Personenbezogene Daten, die im Rahmen der Nutzung dieser Website
+                erfasst werden, werden auf den Servern des Hosters gespeichert.
+                Mit ALL-INKL.COM besteht ein Vertrag zur Auftragsverarbeitung
+                (AVV) gemäß Art. 28 DSGVO, wonach der Hoster personenbezogene
+                Daten nur nach unserer Weisung und zweckgebunden verarbeitet.
+              </p>
+              <h2>
+                4. Quellcode-Verwaltung und Bereitstellung (GitHub, Vercel)
+              </h2>
+              <p>
+                Der Quellcode dieser Website wird in einem privaten Repository
+                bei GitHub verwaltet und automatisiert über Vercel
+                bereitgestellt und ausgeliefert. Dabei können technische
+                Verbindungsdaten (z. B. IP-Adresse, Zeitpunkt des Aufrufs)
+                verarbeitet werden.
+              </p>
+              <address>
+                GitHub, Inc.
+                <br />
+                88 Colin P. Kelly Jr. St.
+                <br />
+                San Francisco, CA 94107
+                <br />
+                USA
+              </address>
+              <address>
+                Vercel Inc.
+                <br />
+                340 S Lemon Ave #4133
+                <br />
+                Walnut, CA 91789
+                <br />
+                USA
+              </address>
+              <p>
+                Beide Anbieter verarbeiten Daten teilweise in den USA. Die
+                Verarbeitung erfolgt auf Grundlage von Standardvertragsklauseln
+                der EU-Kommission sowie geschlossener
+                Auftragsverarbeitungsverträge.
+              </p>
+              <h2>5. Server-Log-Dateien</h2>
+              <p>
+                Der Provider erhebt und speichert automatisch Informationen in
+                sogenannten Server-Log-Dateien, die Ihr Browser automatisch an
+                uns übermittelt. Dies sind: Browsertyp und -version, verwendetes
+                Betriebssystem, Referrer-URL, Hostname des zugreifenden
+                Rechners, Uhrzeit der Serveranfrage und IP-Adresse.
+                Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+              </p>
+              <h2>6. Cookies und Cookie-Banner</h2>
+              <p>
+                Diese Website verwendet Cookies. Beim ersten Besuch werden Sie
+                über ein Cookie-Banner um Ihre Einwilligung zu nicht technisch
+                notwendigen Cookies gebeten. Wir unterscheiden folgende
+                Kategorien:
+              </p>
+              <ul>
+                <li>
+                  <strong>Notwendig:</strong> für den Betrieb der Website
+                  zwingend erforderlich, kein Einwilligungserfordernis (Art. 6
+                  Abs. 1 lit. f DSGVO).
+                </li>
+                <li>
+                  <strong>Statistik:</strong> z. B. Google Analytics, Microsoft
+                  Clarity – nur mit Ihrer Einwilligung (Art. 6 Abs. 1 lit. a
+                  DSGVO).
+                </li>
+                <li>
+                  <strong>Marketing:</strong> z. B. Meta-Pixel, Google Ads
+                  Remarketing – nur mit Ihrer Einwilligung (Art. 6 Abs. 1 lit. a
+                  DSGVO).
+                </li>
+              </ul>
+              <p>
+                Sie können Ihre Einwilligung jederzeit über die
+                Cookie-Einstellungen im Banner anpassen oder widerrufen. Details
+                zum Widerruf finden Sie in Abschnitt 11 dieser Erklärung.
+              </p>
+              <h2>7. Kontaktformular</h2>
+              <p>
+                Wenn Sie uns per Kontaktformular Anfragen zukommen lassen,
+                werden Ihre Angaben aus dem Formular (u. a. Name, Telefonnummer,
+                E-Mail-Adresse, Eventdaten, Nachricht) inklusive der von Ihnen
+                dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und
+                für den Fall von Anschlussfragen bei uns gespeichert und per
+                E-Mail an uns weitergeleitet. Diese Daten geben wir nicht ohne
+                Ihre Einwilligung weiter.
+              </p>
+              <p>
+                Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6
+                Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines
+                Vertrags zusammenhängt oder zur Durchführung vorvertraglicher
+                Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die
+                Verarbeitung auf unserem berechtigten Interesse an der
+                effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6
+                Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1
+                lit. a DSGVO), sofern diese abgefragt wurde.
+              </p>
+              <p>
+                Ein Versand von Dateien oder Liedwunsch-Anhängen über das
+                Formular ist derzeit nicht vorgesehen. Google Forms oder
+                vergleichbare Drittanbieter-Formulare setzen wir nicht ein.
+              </p>
+              <h2>8. Google Tag Manager</h2>
+              <p>
+                Wir setzen den Google Tag Manager (Container-ID GTM-TJC9GX4D)
+                der Google Ireland Limited, Gordon House, Barrow Street, Dublin
+                4, Irland ein. Der Tag Manager ist ein Tool, mit dessen Hilfe
+                wir Tracking- oder Statistik-Tools und andere Technologien auf
+                unserer Website einbinden können. Der Google Tag Manager selbst
+                erstellt keine Nutzerprofile, speichert keine Cookies und nimmt
+                keine eigenständigen Analysen vor. Er sorgt lediglich für die
+                Auslösung der über ihn eingebundenen Dienste, die ihrerseits
+                personenbezogene Daten erfassen können.
+              </p>
+              <p>
+                Technisch wird der Tag-Manager-Code erst nachgeladen, wenn Sie
+                im Cookie-Banner der Kategorie „Statistik“ zustimmen (Opt-in).
+                Ohne Ihre Einwilligung findet keine Verbindung zu Google-Servern
+                statt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO.
+              </p>
+              <h2>9. Google Analytics</h2>
+              <p>
+                Diese Website nutzt – vorbehaltlich Ihrer Einwilligung – Google
+                Analytics, einen Webanalysedienst der Google Ireland Limited,
+                Gordon House, Barrow Street, Dublin 4, Irland. Google Analytics
+                verwendet Cookies bzw. vergleichbare Technologien, die eine
+                Analyse der Benutzung unserer Website ermöglichen. Die dabei
+                erzeugten Informationen werden an einen Server von Google
+                übertragen und dort gespeichert, dies kann auch außerhalb der
+                EU/des EWR erfolgen. Rechtsgrundlage ist Ihre Einwilligung nach
+                Art. 6 Abs. 1 lit. a DSGVO. Weitere Informationen:{" "}
+                <a
+                  href="https://policies.google.com/privacy?hl=de"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  policies.google.com/privacy
+                </a>
+                .
+              </p>
+              <h2>10. Google Ads Remarketing</h2>
+              <p>
+                Vorbehaltlich Ihrer Einwilligung nutzen wir die
+                Remarketing-Funktion von Google Ads (Google Ireland Limited,
+                Gordon House, Barrow Street, Dublin 4, Irland). Damit können
+                Besuchern unserer Website interessenbezogene Werbeanzeigen auf
+                anderen Websites innerhalb des Google-Werbenetzwerks
+                eingeblendet werden. Hierzu speichert der Browser ein Cookie,
+                das eine wiedererkennbare, pseudonyme ID enthält.
+                Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO.
+              </p>
+              <h2>11. Microsoft Clarity</h2>
+              <p>
+                Vorbehaltlich Ihrer Einwilligung setzen wir Microsoft Clarity
+                ein, einen Dienst der Microsoft Ireland Operations Limited, One
+                Microsoft Place, South County Business Park, Leopardstown,
+                Dublin 18, D18 P521, Irland. Microsoft Clarity ermöglicht die
+                Analyse des Nutzerverhaltens (z. B. Mausbewegungen, Klicks,
+                Scrollverhalten) mittels Cookies. Rechtsgrundlage ist Art. 6
+                Abs. 1 lit. a DSGVO. Weitere Informationen:{" "}
+                <a
+                  href="https://privacy.microsoft.com/de-de/privacystatement"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  privacy.microsoft.com
+                </a>
+                .
+              </p>
+              <h2>12. Meta-Ads und Meta-Pixel</h2>
+              <p>
+                Vorbehaltlich Ihrer Einwilligung binden wir Technologien der
+                Meta Platforms Ireland Limited, 4 Grand Canal Square, Grand
+                Canal Harbour, Dublin 2, Irland (u. a. Meta-Pixel) zur
+                Erfolgsmessung und Steuerung von Werbeanzeigen auf Facebook und
+                Instagram ein. Dabei können Nutzungsdaten erhoben und mit Ihrem
+                Meta-Konto verknüpft werden, sofern Sie dort angemeldet sind.
+                Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO. Weitere
+                Informationen:{" "}
+                <a
+                  href="https://www.facebook.com/privacy/policy/"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  facebook.com/privacy/policy
+                </a>
+                .
+              </p>
+              <h2>13. Speicherdauer (Laufzeit)</h2>
+              <p>
+                Personenbezogene Daten aus dem Kontaktformular werden gelöscht,
+                sobald sie für die Erreichung des Zwecks ihrer Erhebung nicht
+                mehr erforderlich sind, spätestens jedoch nach Abschluss der
+                Kommunikation bzw. Durchführung des angefragten Events, sofern
+                keine gesetzlichen Aufbewahrungspflichten (z. B. handels- oder
+                steuerrechtliche Fristen) entgegenstehen. Statistik- und
+                Marketing-Cookies bleiben je nach Anbieter für einen Zeitraum
+                von wenigen Tagen bis zu 24 Monaten gespeichert oder bis Sie
+                Ihre Einwilligung widerrufen; die konkrete Laufzeit einzelner
+                Cookies wird im Cookie-Banner ausgewiesen. Server-Log-Dateien
+                werden aus Sicherheitsgründen für max. 7 Tage vorgehalten und
+                danach automatisiert gelöscht.
+              </p>
+              <h2>14. Widerruf Ihrer Einwilligung</h2>
+              <p>
+                Viele Datenverarbeitungsvorgänge sind nur mit Ihrer
+                ausdrücklichen Einwilligung möglich (z. B. Statistik- und
+                Marketing-Cookies). Sie können eine bereits erteilte
+                Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.
+                Sie haben dazu zwei Möglichkeiten:
+              </p>
+              <ul>
+                <li>
+                  Über die Cookie-Einstellungen, die Sie jederzeit über den Link
+                  „Cookie-Einstellungen“ im Footer dieser Website erneut
+                  aufrufen und anpassen können.
+                </li>
+                <li>
+                  Formlos per E-Mail an {mail} unter Angabe, welche Einwilligung
+                  Sie widerrufen möchten.
+                </li>
+              </ul>
+              <p>
+                Die Rechtmäßigkeit der bis zum Widerruf erfolgten
+                Datenverarbeitung bleibt vom Widerruf unberührt.
+              </p>
+              <h2>15. Ihre Rechte als betroffene Person</h2>
+              <p>
+                Sie haben jederzeit das Recht auf unentgeltliche Auskunft über
+                Ihre gespeicherten personenbezogenen Daten, deren Herkunft und
+                Empfänger sowie den Zweck der Datenverarbeitung (Art. 15 DSGVO)
+                und ggf. ein Recht auf Berichtigung (Art. 16 DSGVO), Löschung
+                (Art. 17 DSGVO), Einschränkung der Verarbeitung (Art. 18 DSGVO),
+                Datenübertragbarkeit (Art. 20 DSGVO) sowie ein Widerspruchsrecht
+                gegen die Verarbeitung (Art. 21 DSGVO). Bitte wenden Sie sich
+                hierzu an die im Impressum bzw. in Abschnitt 1 genannte Adresse.
+              </p>
+              <h2>16. Beschwerderecht bei der Aufsichtsbehörde</h2>
+              <p>
+                Im Falle von Verstößen gegen die DSGVO steht Ihnen ein
+                Beschwerderecht bei einer Aufsichtsbehörde zu, insbesondere in
+                dem Mitgliedstaat Ihres gewöhnlichen Aufenthalts, Ihres
+                Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes.
+                Zuständig für Detmold ist die Landesbeauftragte für Datenschutz
+                und Informationsfreiheit Nordrhein-Westfalen.
+              </p>
+              <h2>17. SSL-/TLS-Verschlüsselung</h2>
+              <p>
+                Diese Website nutzt aus Sicherheitsgründen eine
+                SSL-/TLS-Verschlüsselung für die Übertragung vertraulicher
+                Inhalte. Eine verschlüsselte Verbindung erkennen Sie an dem
+                vorangestellten Protokollkürzel „https://“ sowie am
+                Schloss-Symbol in Ihrer Browserzeile.
               </p>
             </>
           )}
