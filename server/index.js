@@ -335,6 +335,26 @@ app.post("/api/inquiries", inquiryLimit, (req, res) => {
       }
     }
     const link = `${process.env.APP_URL || "http://localhost:5173"}/anfrage/${token}`;
+    if (process.env.SMTP_RECIPIENTS)
+      notify(
+        process.env.SMTP_RECIPIENTS,
+        `Neue DJ-Anfrage: ${d.event_type} am ${d.event_date} in ${d.city}`,
+        [
+          `Name: ${d.name}`,
+          `E-Mail: ${d.email}`,
+          `Event: ${d.event_type}`,
+          `Datum: ${d.event_date}`,
+          `Ort: ${d.city}`,
+          `Musik: ${d.genres.join(", ") || "-"}`,
+          `Gäste: ${d.guests || "-"}`,
+          `Zeit: ${d.start_time || "?"} – ${d.end_time || "?"}`,
+          `Budget: ${d.budget || "-"}`,
+          `Wünsche: ${d.wishes || "-"}`,
+          "",
+          `Anfrage-ID: ${result.lastInsertRowid}`,
+        ].join("\n"),
+        d.email,
+      );
     notify(
       d.email,
       "Deine Anfrage bei DJKompass",

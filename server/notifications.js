@@ -1,12 +1,11 @@
 import nodemailer from "nodemailer";
 import { db } from "./db.js";
 
-const configured = [
-  "SMTP_HOST",
-  "SMTP_USER",
-  "SMTP_PASSWORD",
-  "SMTP_FROM",
-].every((key) => process.env[key]);
+const SMTP_FROM = process.env.SMTP_FROM || process.env.SMTP_USER;
+const configured =
+  ["SMTP_HOST", "SMTP_USER", "SMTP_PASSWORD"].every(
+    (key) => process.env[key],
+  ) && SMTP_FROM;
 const transport = configured
   ? nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -16,7 +15,7 @@ const transport = configured
     })
   : null;
 
-export function notify(recipient, subject, body) {
+export function notify(recipient, subject, body, replyTo) {
   const event = db
     .prepare(
       "INSERT INTO notification_events(recipient,subject,body,status) VALUES(?,?,?,?)",
@@ -28,8 +27,9 @@ export function notify(recipient, subject, body) {
   }
   transport
     .sendMail({
-      from: process.env.SMTP_FROM,
+      from: SMTP_FROM,
       to: recipient,
+      replyTo,
       subject,
       text: body,
     })
