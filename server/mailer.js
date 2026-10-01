@@ -15,5 +15,5 @@ export const transport =
       })
     : null;
 
-export const sendMail = (to, subject, text, replyTo) =>
-  transport.sendMail({ from, to, replyTo, subject, text });
+// message: { to, subject, text, html?, replyTo? }
+export const sendMail = (message) => transport.sendMail({ from, ...message });

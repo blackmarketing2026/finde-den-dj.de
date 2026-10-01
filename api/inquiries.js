@@ -1,6 +1,7 @@
 import {
   inquirySchema,
   isPastDate,
+  leadHtml,
   leadSubject,
   leadText,
 } from "../server/inquiry.js";
@@ -27,12 +28,13 @@ export default async function handler(req, res) {
       .json({ error: "Der Versand ist gerade nicht möglich." });
   }
   try {
-    await sendMail(
-      process.env.SMTP_RECIPIENTS,
-      leadSubject(d),
-      leadText(d),
-      d.email,
-    );
+    await sendMail({
+      to: process.env.SMTP_RECIPIENTS,
+      replyTo: d.email,
+      subject: leadSubject(d),
+      text: leadText(d),
+      html: leadHtml(d),
+    });
   } catch (e) {
     console.error("Lead-Mail fehlgeschlagen:", e.message);
     return res.status(502).json({
@@ -41,11 +43,11 @@ export default async function handler(req, res) {
     });
   }
   try {
-    await sendMail(
-      d.email,
-      "Deine Anfrage bei DJKompass",
-      `Hallo ${d.name},\n\nvielen Dank für deine Anfrage. Wir melden uns in Kürze bei dir.\n\nDeine Angaben:\n${leadText(d)}\n\nDein DJKompass-Team`,
-    );
+    await sendMail({
+      to: d.email,
+      subject: "Deine Anfrage bei DJKompass",
+      text: `Hallo ${d.name},\n\nvielen Dank für deine Anfrage. Wir melden uns in Kürze bei dir.\n\nDeine Angaben:\n${leadText(d)}\n\nDein DJKompass-Team`,
+    });
   } catch (e) {
     console.error("Bestätigungsmail fehlgeschlagen:", e.message);
   }

@@ -15,6 +15,7 @@ import {
   email,
   inquirySchema,
   isPastDate,
+  leadHtml,
   leadSubject,
   leadText,
   list,
@@ -317,7 +318,7 @@ app.post("/api/inquiries", inquiryLimit, (req, res) => {
         process.env.SMTP_RECIPIENTS,
         leadSubject(d),
         `${leadText(d)}\n\nAnfrage-ID: ${result.lastInsertRowid}`,
-        d.email,
+        { replyTo: d.email, html: leadHtml(d, result.lastInsertRowid) },
       );
     notify(
       d.email,

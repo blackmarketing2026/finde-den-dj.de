@@ -104,6 +104,7 @@ const initial = {
   wishes: "",
   name: "",
   email: "",
+  phone: "",
   consent: false,
   website: "",
 };
@@ -474,6 +475,15 @@ function Request() {
                     />
                   </Field>
                 </div>
+                <Field label="Telefon / WhatsApp (optional)">
+                  <input
+                    type="tel"
+                    autoComplete="tel"
+                    placeholder="z. B. 0171 1234567"
+                    value={d.phone}
+                    onChange={(e) => set("phone", e.target.value)}
+                  />
+                </Field>
                 <details className="optional-details">
                   <summary>Weitere Eventdetails (optional)</summary>
 
@@ -540,7 +550,10 @@ function Request() {
                     ],
                     ["Budget", d.budget ? `${d.budget} €` : "–"],
                     ["Wünsche", d.wishes || "–"],
-                    ["Kontakt", `${d.name} · ${d.email}`],
+                    [
+                      "Kontakt",
+                      [d.name, d.email, d.phone].filter(Boolean).join(" · "),
+                    ],
                   ].map(([k, v]) => (
                     <div key={k}>
                       <span>{k}</span>

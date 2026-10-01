@@ -1,7 +1,7 @@
 import { db } from "./db.js";
 import { sendMail, transport } from "./mailer.js";
 
-export function notify(recipient, subject, body, replyTo) {
+export function notify(recipient, subject, body, extra = {}) {
   const event = db
     .prepare(
       "INSERT INTO notification_events(recipient,subject,body,status) VALUES(?,?,?,?)",
@@ -11,7 +11,7 @@ export function notify(recipient, subject, body, replyTo) {
     console.log(`[Benachrichtigung lokal] ${recipient}: ${subject}\n${body}`);
     return;
   }
-  sendMail(recipient, subject, body, replyTo)
+  sendMail({ to: recipient, subject, text: body, ...extra })
     .then(() =>
       db
         .prepare("UPDATE notification_events SET status='sent' WHERE id=?")
