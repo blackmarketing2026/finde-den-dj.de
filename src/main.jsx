@@ -312,7 +312,8 @@ function Request() {
   const [d, setD] = useDraft();
   const [step, setStep] = useState(1),
     [error, setError] = useState(""),
-    [busy, setBusy] = useState(false);
+    [busy, setBusy] = useState(false),
+    [sent, setSent] = useState(false);
   const nav = useNavigate();
   const set = (k, v) => setD((o) => ({ ...o, [k]: v }));
   function next(e) {
@@ -343,13 +344,39 @@ function Request() {
     try {
       const r = await api("/inquiries", { method: "POST", body: d });
       sessionStorage.removeItem("dj_draft");
-      nav("/anfrage/" + r.token);
+      if (r.token) nav("/anfrage/" + r.token);
+      else {
+        setSent(true);
+        window.scrollTo(0, 0);
+      }
     } catch (e) {
       setError(e.message);
     } finally {
       setBusy(false);
     }
   }
+  if (sent)
+    return (
+      <Layout>
+        <section className="page-section">
+          <div className="container narrow">
+            <div className="page-heading">
+              <div className="kicker">ANFRAGE GESENDET</div>
+              <h1>
+                Danke, {d.name}! <span>Wir melden uns bei dir.</span>
+              </h1>
+              <p>
+                Deine Anfrage ist bei uns eingegangen. Eine Bestätigung haben
+                wir an {d.email} geschickt.
+              </p>
+            </div>
+            <Link className="back-link" to="/">
+              ← Zur Startseite
+            </Link>
+          </div>
+        </section>
+      </Layout>
+    );
   return (
     <Layout>
       <section className="page-section">

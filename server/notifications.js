@@ -1,19 +1,5 @@
-import nodemailer from "nodemailer";
 import { db } from "./db.js";
-
-const SMTP_FROM = process.env.SMTP_FROM || process.env.SMTP_USER;
-const configured =
-  ["SMTP_HOST", "SMTP_USER", "SMTP_PASSWORD"].every(
-    (key) => process.env[key],
-  ) && SMTP_FROM;
-const transport = configured
-  ? nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT || 587),
-      secure: Number(process.env.SMTP_PORT || 587) === 465,
-      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASSWORD },
-    })
-  : null;
+import { sendMail, transport } from "./mailer.js";
 
 export function notify(recipient, subject, body, replyTo) {
   const event = db
@@ -25,14 +11,7 @@ export function notify(recipient, subject, body, replyTo) {
     console.log(`[Benachrichtigung lokal] ${recipient}: ${subject}\n${body}`);
     return;
   }
-  transport
-    .sendMail({
-      from: SMTP_FROM,
-      to: recipient,
-      replyTo,
-      subject,
-      text: body,
-    })
+  sendMail(recipient, subject, body, replyTo)
     .then(() =>
       db
         .prepare("UPDATE notification_events SET status='sent' WHERE id=?")

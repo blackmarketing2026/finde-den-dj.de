@@ -11,6 +11,15 @@ import { z } from "zod";
 import { db, parseJson, publicProfile } from "./db.js";
 import { notify } from "./notifications.js";
 import { distanceKm } from "./locations.js";
+import {
+  email,
+  inquirySchema,
+  isPastDate,
+  leadSubject,
+  leadText,
+  list,
+  txt,
+} from "./inquiry.js";
 
 const app = express();
 const PORT = Number(process.env.PORT || 3001);
@@ -70,17 +79,6 @@ const fail = (res, e) =>
   res.status(400).json({
     error: e.issues?.[0]?.message || e.message || "Ungültige Eingabe.",
   });
-const email = z.email("Bitte eine gültige E-Mail-Adresse eingeben.");
-const txt = (min, max, label) =>
-  z
-    .string()
-    .trim()
-    .min(min, `${label} fehlt.`)
-    .max(max, `${label} ist zu lang.`);
-const list = z
-  .array(z.string().trim().min(1))
-  .min(1, "Bitte mindestens eine Option auswählen.")
-  .max(12);
 const profileSchema = z.object({
   stage_name: txt(2, 80, "Künstlername"),
   bio: txt(20, 1500, "Beschreibung"),
@@ -93,27 +91,6 @@ const profileSchema = z.object({
   price_from: z.coerce.number().int().min(0).max(100000),
   availability: z.array(z.iso.date()).max(365).default([]),
   image_url: z.string().max(500).default(""),
-});
-const inquirySchema = z.object({
-  name: txt(2, 100, "Name"),
-  email,
-  event_type: txt(2, 60, "Eventart"),
-  genres: list,
-  city: txt(2, 100, "Ort"),
-  event_date: z.iso.date(),
-  guests: z.preprocess(
-    (value) => (value === "" || value === null ? undefined : value),
-    z.coerce.number().int().min(1).max(100000).optional(),
-  ),
-  start_time: z.string().max(5).optional(),
-  end_time: z.string().max(5).optional(),
-  budget: z.preprocess(
-    (value) => (value === "" || value === null ? undefined : value),
-    z.coerce.number().int().min(0).max(1000000).optional(),
-  ),
-  wishes: z.string().max(2000).default(""),
-  consent: z.literal(true),
-  website: z.string().max(0).default(""),
 });
 function matchProfile(inq, p) {
   const reasons = [];
@@ -277,7 +254,7 @@ app.post("/api/dj/image", requireRole("dj"), (req, res) => {
 app.post("/api/inquiries", inquiryLimit, (req, res) => {
   try {
     const d = inquirySchema.parse(req.body);
-    if (d.event_date < new Date().toISOString().slice(0, 10))
+    if (isPastDate(d.event_date))
       throw Error("Bitte ein zukünftiges Datum wählen.");
     const recent = db
       .prepare(
@@ -338,21 +315,8 @@ app.post("/api/inquiries", inquiryLimit, (req, res) => {
     if (process.env.SMTP_RECIPIENTS)
       notify(
         process.env.SMTP_RECIPIENTS,
-        `Neue DJ-Anfrage: ${d.event_type} am ${d.event_date} in ${d.city}`,
-        [
-          `Name: ${d.name}`,
-          `E-Mail: ${d.email}`,
-          `Event: ${d.event_type}`,
-          `Datum: ${d.event_date}`,
-          `Ort: ${d.city}`,
-          `Musik: ${d.genres.join(", ") || "-"}`,
-          `Gäste: ${d.guests || "-"}`,
-          `Zeit: ${d.start_time || "?"} – ${d.end_time || "?"}`,
-          `Budget: ${d.budget || "-"}`,
-          `Wünsche: ${d.wishes || "-"}`,
-          "",
-          `Anfrage-ID: ${result.lastInsertRowid}`,
-        ].join("\n"),
+        leadSubject(d),
+        `${leadText(d)}\n\nAnfrage-ID: ${result.lastInsertRowid}`,
         d.email,
       );
     notify(
